@@ -7,7 +7,7 @@ class Student < Person
     @name = name
     @age = age
     @parent_permission = parent_permission
-    super
+    super(@age, @name, @parent_permission)
     @classroom = classroom
   end
 
