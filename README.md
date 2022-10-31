@@ -10,10 +10,6 @@
 - Ruby
 
 
-## Live Demo (if available)
-
-[Live Demo Link](https://livedemo.com)
-
 
 ## Author
 
@@ -42,4 +38,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](./mit.md) licensed.
+This project is [MIT](./MIT.md) licensed.
