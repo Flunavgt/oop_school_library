@@ -13,6 +13,7 @@ class Student < Person
 
   def classrooms(classroom)
     @classroom = classroom
+    classroom.student_list.push(self) unless classroom.student_list.include?(self)
   end
 
   def play_hooky
