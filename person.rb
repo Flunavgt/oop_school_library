@@ -7,13 +7,13 @@ class Person < Nameable
   attr_reader :id
   attr_accessor :name, :age, :rentals
 
-  def initialize(age, name = 'unknown', parent_permission: true)
-    @id = Random.rand(1..10_000)
-    @name = name
+  def initialize(age, name = 'Unknown', parent_permission = nil)
+    super()
     @age = age
+    @name = name
+    parent_permission = true if parent_permission.nil?
     @parent_permission = parent_permission
     @rentals = []
-    super()
   end
 
   def can_use_services?
@@ -30,16 +30,9 @@ class Person < Nameable
     Rental.new(date, book, self)
   end
 
-  private
+  # private
 
   def of_age?
     @age >= 18
   end
 end
-
-person = Person.new(22, 'maximilianus')
-capitalized_person = CapitalizeDecorator.new(person)
-capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-puts person.correct_name
-puts capitalized_person.correct_name
-puts capitalized_trimmed_person.correct_name
