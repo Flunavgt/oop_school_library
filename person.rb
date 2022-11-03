@@ -24,6 +24,12 @@ class Person < Nameable
     @name
   end
 
+  def rent(date, book)
+    return if @rentals.length.positive? && @rentals[@rentals.length - 1].person == self
+
+    Rental.new(date, book, self)
+  end
+
   private
 
   def of_age?
