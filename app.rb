@@ -60,7 +60,7 @@ class App
     puts 'List of books:'
     puts ''
     @books.each_with_index do |bk, i|
-      puts "#{i + 1}- #{bk.title} (#{bk.author})"
+      puts "#{i + 1}- Titulo: #{bk.title}   author:  #{bk.author}"
     end
     show_link_to_main
   end
@@ -69,7 +69,7 @@ class App
     puts 'List of people:'
     puts ''
     @people.each_with_index do |peop, i|
-      puts "#{i + 1}- #{peop.name}"
+      puts "#{i + 1}- #{peop.name} age: #{peop.age}"
     end
     show_link_to_main
   end
@@ -124,7 +124,9 @@ class App
     classroom = gets.chomp
     print 'Name: '
     name = gets.chomp
-    student = Student.new(age, classroom, name)
+    print 'Has parent permission true/false: '
+    parent_permission = gets.chomp
+    student = Student.new(age, classroom, name, parent_permission)
     @people.push(student)
     puts ''
     puts "Student \"#{student.name}\" added successfully."
