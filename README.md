@@ -4,12 +4,15 @@
 
 > A library manager created in ruby for a school.
 
+![Screen Shot 2022-11-03 at 18 54 10](https://user-images.githubusercontent.com/99816838/199862179-611174f1-2155-4096-b49c-36b8c39e377c.png)
 
 ## Built With
 
 - Ruby
 
-
+## To run this app, 
+You may clone the repository at https://github.com/Flunavgt/oop_school_library.git
+Then execute main.rd
 
 ## Author
 
