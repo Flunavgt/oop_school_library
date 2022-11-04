@@ -9,7 +9,9 @@
 
 - Ruby
 
-
+## To run this app, 
+You may clone the repository at https://github.com/Flunavgt/oop_school_library.git
+Then execute main.rd
 
 ## Author
 
