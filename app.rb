@@ -1,7 +1,14 @@
-require './book'
-require './teacher'
+# require './book'
+# require './teacher'
 require './student'
 require './rental'
+require './book_list'
+require './people_list'
+require './add_book'
+require './add_teacher'
+require './add_student'
+require './rent_book'
+require './rent_history'
 
 class App
   attr_reader :books, :people, :rental
@@ -16,18 +23,18 @@ class App
     show_menu
 
     menu_list = {
-      '1' => method(:book_list),
-      '2' => method(:people_list),
-      '3' => method(:add_teacher),
-      '4' => method(:add_student),
-      '5' => method(:add_book),
-      '6' => method(:rent_book),
+      '1' => @BookList,
+      '2' => @PeopleList,
+      '3' => @AddTeacher,
+      '4' => @AddStudent,
+      '5' => AddBook,
+      '6' => @RentBook,
       '7' => method(:rent_history)
     }
 
     menu = gets.chomp
     if menu.to_i.positive? && menu.to_i <= 7
-      menu_list[menu].call
+      menu_list[menu]
     elsif menu == '0'
       puts 'Thank you, come back soon.'
     else
@@ -56,23 +63,23 @@ class App
     puts ''
   end
 
-  def book_list
-    puts 'List of books:'
-    puts ''
-    @books.each_with_index do |bk, i|
-      puts "#{i + 1}- Titulo: #{bk.title}   author:  #{bk.author}"
-    end
-    show_link_to_main
-  end
+  # def book_list
+  #   puts 'List of books:'
+  #   puts ''
+  #   @books.each_with_index do |bk, i|
+  #     puts "#{i + 1}- Titulo: #{bk.title}   author:  #{bk.author}"
+  #   end
+  #   show_link_to_main
+  # end
 
-  def people_list
-    puts 'List of people:'
-    puts ''
-    @people.each_with_index do |peop, i|
-      puts "#{i + 1}- #{peop.class} name: #{peop.name} age: #{peop.age}"
-    end
-    show_link_to_main
-  end
+  # def people_list
+  #   puts 'List of people:'
+  #   puts ''
+  #   @people.each_with_index do |peop, i|
+  #     puts "#{i + 1}- #{peop.class} name: #{peop.name} age: #{peop.age}"
+  #   end
+  #   show_link_to_main
+  # end
 
   def show_link_to_main
     puts ''
@@ -86,76 +93,76 @@ class App
     end
   end
 
-  def add_book
-    puts 'Adding a new book: '
-    print 'Title: '
-    title = gets.chomp
-    print 'Author: '
-    author = gets.chomp
-    book = Book.new(title, author)
-    @books.push(book)
-    puts ''
-    puts "Book \"#{book.title}\" added successfully."
+  # def add_book
+  #   puts 'Adding a new book: '
+  #   print 'Title: '
+  #   title = gets.chomp
+  #   print 'Author: '
+  #   author = gets.chomp
+  #   book = Book.new(title, author)
+  #   @books.push(book)
+  #   puts ''
+  #   puts "Book \"#{book.title}\" added successfully."
 
-    run
-  end
+  #   run
+  # end
 
-  def add_teacher
-    puts 'Add a new teacher: '
-    print 'Age: '
-    age = gets.chomp
-    print 'Specialization: '
-    specialization = gets.chomp
-    print 'Name: '
-    name = gets.chomp
-    teacher = Teacher.new(age, specialization, name)
-    @people.push(teacher)
-    puts ''
-    puts "Teacher \"#{teacher.name}\" added correctly."
+  # def add_teacher
+  #   puts 'Add a new teacher: '
+  #   print 'Age: '
+  #   age = gets.chomp
+  #   print 'Specialization: '
+  #   specialization = gets.chomp
+  #   print 'Name: '
+  #   name = gets.chomp
+  #   teacher = Teacher.new(age, specialization, name)
+  #   @people.push(teacher)
+  #   puts ''
+  #   puts "Teacher \"#{teacher.name}\" added correctly."
 
-    run
-  end
+  #   run
+  # end
 
-  def add_student
-    puts 'Add a new student: '
-    print 'Age: '
-    age = gets.chomp
-    print 'Classroom: '
-    classroom = gets.chomp
-    print 'Name: '
-    name = gets.chomp
-    print 'Has parent permission true/false: '
-    parent_permission = gets.chomp
-    student = Student.new(age, classroom, name, parent_permission)
-    @people.push(student)
-    puts ''
-    puts "Student \"#{student.name}\" added successfully."
+  # def add_student
+  #   puts 'Add a new student: '
+  #   print 'Age: '
+  #   age = gets.chomp
+  #   print 'Classroom: '
+  #   classroom = gets.chomp
+  #   print 'Name: '
+  #   name = gets.chomp
+  #   print 'Has parent permission true/false: '
+  #   parent_permission = gets.chomp
+  #   student = Student.new(age, classroom, name, parent_permission)
+  #   @people.push(student)
+  #   puts ''
+  #   puts "Student \"#{student.name}\" added successfully."
 
-    run
-  end
+  #   run
+  # end
 
-  def rent_book
-    puts 'select a book by typing it\'s number and press enter:'
-    @books.each_with_index { |el, i| puts "#{i + 1}- #{el.title} (#{el.author})" }
-    book_index = gets.chomp
-    unless book_index.to_i.positive? && book_index.to_i <= @books.length
-      puts 'Invalid book number, Try again.'
-      rent_book
-    end
-    puts 'select a person by typing it\'s number and press enter:'
-    @people.each_with_index { |el, i| puts "#{i + 1}- #{el.name}" }
-    person_index = gets.chomp
-    unless person_index.to_i.positive? && person_index.to_i <= @people.length
-      puts 'Invalid person number, Try again.'
-      rent_book
-    end
-    print 'Rent Date (yyyy/mm/dd):'
-    rent_date = gets.chomp
-    rental = Rental.new(rent_date, @books[book_index.to_i - 1], @people[person_index.to_i - 1])
-    @rental.push(rental)
-    puts 'Book rental saved successfully.'
-    run
-  end
+  # def rent_book
+  #   puts 'select a book by typing it\'s number and press enter:'
+  #   @books.each_with_index { |el, i| puts "#{i + 1}- #{el.title} (#{el.author})" }
+  #   book_index = gets.chomp
+  #   unless book_index.to_i.positive? && book_index.to_i <= @books.length
+  #     puts 'Invalid book number, Try again.'
+  #     rent_book
+  #   end
+  #   puts 'select a person by typing it\'s number and press enter:'
+  #   @people.each_with_index { |el, i| puts "#{i + 1}- #{el.name}" }
+  #   person_index = gets.chomp
+  #   unless person_index.to_i.positive? && person_index.to_i <= @people.length
+  #     puts 'Invalid person number, Try again.'
+  #     rent_book
+  #   end
+  #   print 'Rent Date (yyyy/mm/dd):'
+  #   rent_date = gets.chomp
+  #   rental = Rental.new(rent_date, @books[book_index.to_i - 1], @people[person_index.to_i - 1])
+  #   @rental.push(rental)
+  #   puts 'Book rental saved successfully.'
+  #   run
+  # end
 
   def rent_history
     puts 'select a person by typing it\'s number and press enter:'
