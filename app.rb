@@ -13,6 +13,9 @@ require './rent_history'
 class App
   attr_reader :books, :people, :rental
 
+  include AddBook
+  # include BookList
+
   def initialize
     @books = []
     @people = []
@@ -23,18 +26,18 @@ class App
     show_menu
 
     menu_list = {
-      '1' => @BookList,
+      '1' => method(:book_list),
       '2' => @PeopleList,
       '3' => @AddTeacher,
       '4' => @AddStudent,
-      '5' => AddBook,
+      '5' => method(:test),
       '6' => @RentBook,
       '7' => method(:rent_history)
     }
 
     menu = gets.chomp
     if menu.to_i.positive? && menu.to_i <= 7
-      menu_list[menu]
+      menu_list[menu].call
     elsif menu == '0'
       puts 'Thank you, come back soon.'
     else
@@ -63,30 +66,39 @@ class App
     puts ''
   end
 
+  def test
+    add_book
+  end
+
   # def book_list
-  #   puts 'List of books:'
-  #   puts ''
-  #   @books.each_with_index do |bk, i|
-  #     puts "#{i + 1}- Titulo: #{bk.title}   author:  #{bk.author}"
-  #   end
-  #   show_link_to_main
+  #   AddBook.book_list
   # end
 
-  # def people_list
-  #   puts 'List of people:'
-  #   puts ''
-  #   @people.each_with_index do |peop, i|
-  #     puts "#{i + 1}- #{peop.class} name: #{peop.name} age: #{peop.age}"
-  #   end
-  #   show_link_to_main
-  # end
+  def book_list
+    puts 'List of books:'
+    puts ''
+    @books.each_with_index do |bk, i|
+      puts "#{i + 1}- Titulo: #{bk.title}   author:  #{bk.author}"
+    end
+    # show_link_to_main
+    puts 'hello'
+  end
 
-  def show_link_to_main
+  def people_list
+    puts 'List of people:'
+    puts ''
+    @people.each_with_index do |peop, i|
+      puts "#{i + 1}- #{peop.class} name: #{peop.name} age: #{peop.age}"
+    end
+    show_link_to_main
+  end
+
+  def self.show_link_to_main
     puts ''
     puts 'Type 0 then press enter to go to the main menu. '
     key = gets.chomp
     if key == '0'
-      run
+      App.new.run
     else
       puts 'Please type a valid option'
       show_link_to_main
@@ -97,7 +109,7 @@ class App
   #   puts 'Adding a new book: '
   #   print 'Title: '
   #   title = gets.chomp
-  #   print 'Author: '
+  #   print 'Author: ' 
   #   author = gets.chomp
   #   book = Book.new(title, author)
   #   @books.push(book)

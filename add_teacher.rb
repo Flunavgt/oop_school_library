@@ -1,7 +1,7 @@
 require './person'
 require './teacher'
 
-class AddTeacher
+module AddTeacher
   def add_teacher
     puts 'Add a new teacher: '
     print 'Age: '
